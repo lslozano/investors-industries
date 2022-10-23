@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableWrapper, Button } from '../styles';
+import { MainWrapper, TableWrapper, Button, SectionWrapper } from '../styles';
 import { useParams, Link } from 'react-router-dom';
 
 // This table allows us to see the Investor, their interest and all the industries matched to it
@@ -11,38 +11,40 @@ const InvestorTable = ({ dataMatched }) => {
   const [name, interest] = filteredInvestor[0];
 
   return (
-    <div>
-      <Button>
-        <Link to="/" label="Home">
-          Back
-        </Link>
-      </Button>
-      <section>
-        <h1>Investor: {name} </h1>
-        <p>Interest: {interest}</p>
-        <p>Startups:</p>
-      </section>
-      <section>
-        <TableWrapper>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Preference</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredInvestor[0].startups.map((startup, index) => {
-              return (
-                <tr key={index}>
-                  <td>{startup[0]}</td>
-                  <td>{startup[1]}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </TableWrapper>
-      </section>
-    </div>
+    <MainWrapper>
+      <SectionWrapper>
+        <Button>
+          <Link to="/" aria-label="Home">
+            Back
+          </Link>
+        </Button>
+        <section>
+          <h1>Investor: {name} </h1>
+          <p>Interest: {interest}</p>
+        </section>
+        <section>
+          <TableWrapper>
+            <caption>Startups</caption>
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Preference</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredInvestor[0].startups.map((startup, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{startup[0]}</td>
+                    <td>{startup[1]}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </TableWrapper>
+        </section>
+      </SectionWrapper>
+    </MainWrapper>
   );
 };
 
