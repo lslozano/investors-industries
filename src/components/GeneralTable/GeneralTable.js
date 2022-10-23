@@ -7,11 +7,12 @@ import { TableWrapper, Button } from '../styles'
 const GeneralTable = ({ data }) => {
   return (
     <TableWrapper>
+      <caption>Investors</caption>
       <thead>
         <tr>
-          <th>Investor</th>
-          <th>Preference</th>
-          <th>Startups</th>
+          <th scope="col">Investor</th>
+          <th scope="col">Preference</th>
+          <th scope="col">Startups</th>
         </tr>
       </thead>
       <tbody>
@@ -22,7 +23,7 @@ const GeneralTable = ({ data }) => {
               <td>{investor[1]}</td>
               <td>
                 <Button>
-                  <Link to={`/${investor[0]}`} label="Investor Startups">View more</Link>
+                  <Link to={`/${investor[0]}`} aria-label="View more information about startups linked to investor">View more</Link>
                 </Button>
               </td>
             </tr>

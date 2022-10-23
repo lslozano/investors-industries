@@ -3,7 +3,6 @@ import Papa from 'papaparse';
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import InvestorTable from './components/InvestorTable';
-import { MainWrapper } from './components/styles';
 
 function App() {
   const [investors, setInvestors] = useState();
@@ -48,9 +47,6 @@ function App() {
       header: false,
       skipEmptyLines: true,
       complete: (results) => {
-        for (let i = 0; i < results.data; i++) {
-          results.data[i].startups = [];
-        }
         setInvestors(results.data);
       },
     });
@@ -67,23 +63,22 @@ function App() {
   };
 
   return (
-    <MainWrapper>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              investors={investors}
-              startups={startups}
-              investorsChangeHandler={investorsChangeHandler}
-              startupsChangeHandler={startupsChangeHandler}
-              dataMatched={dataMatched}
-            />
-          }
-        />
-        <Route path="/:investorName" element={<InvestorTable dataMatched={dataMatched} />} />
-      </Routes>
-    </MainWrapper>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Home
+            investorsChangeHandler={investorsChangeHandler}
+            startupsChangeHandler={startupsChangeHandler}
+            dataMatched={dataMatched}
+          />
+        }
+      />
+      <Route
+        path="/:investorName"
+        element={<InvestorTable dataMatched={dataMatched} />}
+      />
+    </Routes>
   );
 }
 

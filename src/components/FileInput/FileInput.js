@@ -1,19 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import { FileInputWrapper } from '../styles';
 
 const FileInput = ({ text, handleChange }) => {
   return (
-    <Wrapper>
+    <FileInputWrapper>
       <label htmlFor="file">{text}</label>
-      <input type="file" name="file" accept=".csv" onChange={handleChange} />
-    </Wrapper>
+      <input type="file" name="file" accept=".csv" aria-label="Add csv file" onChange={handleChange} />
+    </FileInputWrapper>
   );
 };
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
 
 export default FileInput;
