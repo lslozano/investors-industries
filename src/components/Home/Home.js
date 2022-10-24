@@ -15,7 +15,7 @@ const Home = ({
 }) => {
   return (
     <MainWrapper>
-      {!dataMatched && (
+      {dataMatched.length === 0 && (
         <FormWrapper>
           <legend id="csv-files">Add csv files</legend>
           <InputsWrapper>
@@ -30,7 +30,7 @@ const Home = ({
           </InputsWrapper>
         </FormWrapper>
       )}
-      {dataMatched && (
+      {dataMatched.length > 0 && (
         <SectionWrapper aria-label="investors">
           <h1>All Investors</h1>
           <GeneralTable data={dataMatched} />
