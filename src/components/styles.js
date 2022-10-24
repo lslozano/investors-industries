@@ -12,7 +12,7 @@ export const MainWrapper = styled.main`
 
 export const SectionWrapper = styled.section`
   width: 100%;
-`
+`;
 
 export const TableWrapper = styled.table`
   width: 100%;
@@ -31,17 +31,26 @@ export const TableWrapper = styled.table`
   }
 `;
 
-export const Button = styled.button`
+const Button = styled.button`
   border: none;
   border-radius: 4px;
-  background-color: #0074d9;
   cursor: pointer;
+  font-weight: bold;
+  color: #fff;
 
   & a {
     text-decoration: none;
-    color: #fff;
     font-weight: bold;
+    color: #fff;
   }
+`;
+
+export const PrimaryButton = styled(Button)`
+  background-color: #0074d9;
+`;
+
+export const EditButton = styled(Button)`
+  background-color: #28a745;
 `;
 
 export const FormWrapper = styled.form`

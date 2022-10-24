@@ -6,7 +6,9 @@ import {
   FormWrapper,
   InputsWrapper,
   SectionWrapper,
+  EditButton,
 } from '../styles';
+import { Link } from 'react-router-dom';
 
 const Home = ({
   investorsChangeHandler,
@@ -33,6 +35,11 @@ const Home = ({
       {dataMatched.length > 0 && (
         <SectionWrapper aria-label="investors">
           <h1>All Investors</h1>
+          <EditButton>
+            <Link to="/edit" aria-label="Edit investors">
+              Edit investors
+            </Link>
+          </EditButton>
           <GeneralTable data={dataMatched} />
         </SectionWrapper>
       )}

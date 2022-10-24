@@ -3,6 +3,8 @@ import Papa from 'papaparse';
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import InvestorTable from './components/InvestorTable';
+import EditTable from './components/EditTable';
+import EditInvestor from './components/EditInvestor';
 import useLocalStorage from './hooks/useLocalStorage';
 import { mergeInvestorsStartups } from './utils/mergeData';
 
@@ -19,7 +21,7 @@ function App() {
   }, [investors, startups, setDataMatched]);
 
   // Methods to handle change in the File Input component.
-  // Helps adding investros.csv and startups.csv
+  // Helps adding investors.csv and startups.csv
   const investorsChangeHandler = (event) => {
     Papa.parse(event.target.files[0], {
       header: false,
@@ -52,9 +54,14 @@ function App() {
           />
         }
       />
+      <Route path="/edit" element={<EditTable data={dataMatched} />} />
+      <Route
+        path="/edit/:investorName"
+        element={<EditInvestor data={dataMatched} />}
+      />
       <Route
         path="/:investorName"
-        element={<InvestorTable dataMatched={dataMatched} />}
+        element={<InvestorTable data={dataMatched} />}
       />
     </Routes>
   );

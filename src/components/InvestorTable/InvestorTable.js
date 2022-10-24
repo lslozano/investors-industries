@@ -1,11 +1,11 @@
 import React from 'react';
-import { MainWrapper, TableWrapper, Button, SectionWrapper } from '../styles';
+import { MainWrapper, TableWrapper, PrimaryButton, SectionWrapper } from '../styles';
 import { useParams, Link } from 'react-router-dom';
 
 // This table allows us to see the Investor, their interest and all the industries matched to it
-const InvestorTable = ({ dataMatched }) => {
+const InvestorTable = ({ data }) => {
   const { investorName } = useParams();
-  const filteredInvestor = dataMatched.filter(
+  const filteredInvestor = data.filter(
     (investor) => investor[0] === investorName
   );
 
@@ -14,11 +14,11 @@ const InvestorTable = ({ dataMatched }) => {
   return (
     <MainWrapper>
       <SectionWrapper>
-        <Button>
+        <PrimaryButton>
           <Link to="/" aria-label="Home">
             Back
           </Link>
-        </Button>
+        </PrimaryButton>
         <section>
           <h1>Investor: {name} </h1>
           <p>Interest: {interest}</p>
