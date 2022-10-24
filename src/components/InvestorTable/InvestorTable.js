@@ -24,6 +24,7 @@ const InvestorTable = ({ dataMatched }) => {
           <p>Interest: {interest}</p>
         </section>
         <section>
+        {startups.length > 0 ? (
           <TableWrapper>
             <caption>Startups</caption>
             <thead>
@@ -43,6 +44,9 @@ const InvestorTable = ({ dataMatched }) => {
               })}
             </tbody>
           </TableWrapper>
+        ) : (
+          <p>No startups matched.</p>
+        )}
         </section>
       </SectionWrapper>
     </MainWrapper>
