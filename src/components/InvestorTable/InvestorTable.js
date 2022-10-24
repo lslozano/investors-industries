@@ -8,7 +8,8 @@ const InvestorTable = ({ dataMatched }) => {
   const filteredInvestor = dataMatched.filter(
     (investor) => investor[0] === investorName
   );
-  const [name, interest] = filteredInvestor[0];
+
+  const [name, interest, startups] = filteredInvestor[0];
 
   return (
     <MainWrapper>
@@ -32,7 +33,7 @@ const InvestorTable = ({ dataMatched }) => {
               </tr>
             </thead>
             <tbody>
-              {filteredInvestor[0].startups.map((startup, index) => {
+              {startups.map((startup, index) => {
                 return (
                   <tr key={index}>
                     <td>{startup[0]}</td>

@@ -3,11 +3,12 @@ import Papa from 'papaparse';
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import InvestorTable from './components/InvestorTable';
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
   const [investors, setInvestors] = useState();
   const [startups, setStartups] = useState();
-  const [dataMatched, setDataMatched] = useState();
+  const [dataMatched, setDataMatched] = useLocalStorage('investors', []);
 
   useEffect(() => {
     if (investors && startups) {
@@ -16,7 +17,7 @@ function App() {
       // Loops through investorsCopy and for each element, adds industries property
       // Which will point to an array that can hold startups.
       for (let i = 0; i < investorsCopy.length; i++) {
-        investorsCopy[i].startups = [];
+        investorsCopy[i][2] = [];
       }
 
       // Loops through investors copy and startups to match investors with startups of their
@@ -28,17 +29,17 @@ function App() {
             investorsCopy[i][1] === startups[j][1] ||
             investorsCopy[i][1] === 'any'
           ) {
-            if (investorsCopy[i].startups.length < 10) {
-              investorsCopy[i].startups.push(startups[j]);
+            if (investorsCopy[i][2].length < 10) {
+              investorsCopy[i][2].push(startups[j]);
             }
           }
         }
       }
 
-      // Sets the matched investors with their startups in state
+      // Sets the matched investors with their startups in localStorage
       setDataMatched(investorsCopy);
     }
-  }, [investors, startups]);
+  }, [investors, startups, setDataMatched]);
 
   // Methods to handle change in the File Input component.
   // Helps adding investros.csv and startups.csv
