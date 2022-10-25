@@ -11,14 +11,14 @@ import { mergeInvestorsStartups } from './utils/mergeData';
 function App() {
   const [investors, setInvestors] = useState();
   const [startups, setStartups] = useState();
-  const [dataMatched, setDataMatched] = useLocalStorage('investors', []);
+  const [localStorageData, setLocalStorageData] = useLocalStorage('investors', []);
 
   useEffect(() => {
     if (investors && startups) {
       // Sets the matched investors with their startups in localStorage
-      setDataMatched(mergeInvestorsStartups(investors, startups));
+      setLocalStorageData(mergeInvestorsStartups(investors, startups));
     }
-  }, [investors, startups, setDataMatched]);
+  }, [investors, startups, setLocalStorageData]);
 
   // Methods to handle change in the File Input component.
   // Helps adding investors.csv and startups.csv
@@ -50,18 +50,18 @@ function App() {
           <Home
             investorsChangeHandler={investorsChangeHandler}
             startupsChangeHandler={startupsChangeHandler}
-            dataMatched={dataMatched}
+            dataMatched={localStorageData}
           />
         }
       />
-      <Route path="/edit" element={<EditTable data={dataMatched} />} />
+      <Route path="/edit" element={<EditTable data={localStorageData} />} />
       <Route
         path="/edit/:investorName"
-        element={<EditInvestor data={dataMatched} />}
+        element={<EditInvestor data={localStorageData} />}
       />
       <Route
         path="/:investorName"
-        element={<InvestorTable data={dataMatched} />}
+        element={<InvestorTable dataMatched={localStorageData} />}
       />
     </Routes>
   );
