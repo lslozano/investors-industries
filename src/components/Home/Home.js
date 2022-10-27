@@ -6,16 +6,18 @@ import {
   FormWrapper,
   InputsWrapper,
   SectionWrapper,
+  EditButton,
 } from '../styles';
+import { Link } from 'react-router-dom';
 
 const Home = ({
   investorsChangeHandler,
   startupsChangeHandler,
-  dataMatched,
+  data,
 }) => {
   return (
     <MainWrapper>
-      {dataMatched.length === 0 && (
+      {data.length === 0 && (
         <FormWrapper>
           <legend id="csv-files">Add csv files</legend>
           <InputsWrapper>
@@ -30,10 +32,15 @@ const Home = ({
           </InputsWrapper>
         </FormWrapper>
       )}
-      {dataMatched.length > 0 && (
+      {data.length > 0 && (
         <SectionWrapper aria-label="investors">
           <h1>All Investors</h1>
-          <GeneralTable data={dataMatched} />
+          <EditButton>
+            <Link to="/edit" aria-label="Edit investors">
+              Edit investors
+            </Link>
+          </EditButton>
+          <GeneralTable data={data} />
         </SectionWrapper>
       )}
     </MainWrapper>

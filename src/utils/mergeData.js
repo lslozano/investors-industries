@@ -1,3 +1,4 @@
+// Method that helps us merge the initial data.
 export const mergeInvestorsStartups = (investors, startups) => {
   const investorsCopy = [...investors];
   const startupsCopy = [...startups];
@@ -13,6 +14,7 @@ export const mergeInvestorsStartups = (investors, startups) => {
   // Since investorsCopy and startupsCopy are arrays, we need to access each element by their respective index.
   // We use copies in order to not alter the state directly.
 
+  // First match investors that have specific interests with the respective startups.
   // The second condition verifies if the startup is not present within the array of startups at investor.
   for (let i = 0; i < investorsCopy.length; i++) {
     for (let j = 0; j < startupsCopy.length; j++) {
@@ -29,6 +31,7 @@ export const mergeInvestorsStartups = (investors, startups) => {
     }
   }
 
+  // Do a second pass to match investors that have any as an interest and match the rest of the startups.
   for (let i = 0; i < investorsCopy.length; i++) {
     for (let j = 0; j < startupsCopy.length; j++) {
       if (
@@ -46,3 +49,6 @@ export const mergeInvestorsStartups = (investors, startups) => {
 
   return investorsCopy;
 };
+
+// Here I had a problem which I couldn't solve. For the investor called Lisha, I ended up with 9 startups.
+// And with 1 startups left in the startups array.
