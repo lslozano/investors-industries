@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   TableWrapper,
   PrimaryButton,
+  EditButton,
   SectionWrapper,
   MainWrapper,
 } from '../styles';
@@ -32,14 +33,14 @@ const EditTable = ({ data }) => {
                 <tr key={index}>
                   <td>{investor[0]}</td>
                   <td>
-                    <PrimaryButton>
+                    <EditButton>
                       <Link
                         to={`/edit/${investor[0]}`}
                         aria-label="Edit investor"
                       >
                         Edit
                       </Link>
-                    </PrimaryButton>
+                    </EditButton>
                   </td>
                 </tr>
               );

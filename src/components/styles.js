@@ -53,6 +53,16 @@ export const EditButton = styled(Button)`
   background-color: #28a745;
 `;
 
+export const DeleteButton = styled(Button)`
+  background-color: #dc3545;
+`
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-block-end: 10px;
+`
+
 export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
@@ -94,3 +104,12 @@ export const FileInputWrapper = styled.div`
     width: 100%;
   }
 `;
+
+
+export const PortalContent = styled.div`
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  background-color: #f7f7f7;
+`
