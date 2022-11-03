@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import FileInput from '../FileInput';
 import GeneralTable from '../GeneralTable';
 import {
@@ -9,30 +9,31 @@ import {
   EditButton,
 } from '../styles';
 import { Link } from 'react-router-dom';
+import Context from '../../Context';
 
-const Home = ({
-  investorsChangeHandler,
-  startupsChangeHandler,
-  data,
-}) => {
+const Home = () => {
+  const { store, helpers } = useContext(Context);
+  const { addInvestorsCSV, addStartupsCSV, setInvestors, setStartups } =
+    helpers || {};
+
   return (
     <MainWrapper>
-      {data.length === 0 && (
+      {store.length === 0 && (
         <FormWrapper>
           <legend id="csv-files">Add csv files</legend>
           <InputsWrapper>
             <FileInput
               text="Add your investors here"
-              handleChange={investorsChangeHandler}
+              handleChange={(e) => addInvestorsCSV(e, setInvestors)}
             />
             <FileInput
               text="Add your startups here"
-              handleChange={startupsChangeHandler}
+              handleChange={(e) => addStartupsCSV(e, setStartups)}
             />
           </InputsWrapper>
         </FormWrapper>
       )}
-      {data.length > 0 && (
+      {store.length > 0 && (
         <SectionWrapper aria-label="investors">
           <h1>All Investors</h1>
           <EditButton>
@@ -40,7 +41,7 @@ const Home = ({
               Edit investors
             </Link>
           </EditButton>
-          <GeneralTable data={data} />
+          <GeneralTable store={store} />
         </SectionWrapper>
       )}
     </MainWrapper>

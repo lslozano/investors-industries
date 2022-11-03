@@ -4,7 +4,7 @@ import { TableWrapper, PrimaryButton } from '../styles'
 
 // This table allows us to see the general data presented on main page
 // And access the respective investor
-const GeneralTable = ({ data }) => {
+const GeneralTable = ({ store }) => {
   return (
     <TableWrapper>
       <caption>Investors</caption>
@@ -16,14 +16,14 @@ const GeneralTable = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((investor, index) => {
+        {store.map((investor, index) => {
           return (
             <tr key={index}>
-              <td>{investor[0]}</td>
-              <td>{investor[1]}</td>
+              <td>{investor.name}</td>
+              <td>{investor.interest}</td>
               <td>
                 <PrimaryButton>
-                  <Link to={`/${investor[0]}`} aria-label="View more information about startups linked to investor">View more</Link>
+                  <Link to={`/${investor.name}`} aria-label="View more information about startups linked to investor">View more</Link>
                 </PrimaryButton>
               </td>
             </tr>

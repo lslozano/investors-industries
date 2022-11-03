@@ -8,7 +8,7 @@ import {
   ButtonsContainer,
 } from '../styles';
 import { useParams, Link } from 'react-router-dom';
-import { investorFilter } from '../../utils/investorFilter';
+import { investorFilter } from '../../utils';
 
 // This table allows us to see the Investor, their interest and all the industries matched to it
 const InvestorTable = ({ data }) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {
   TableWrapper,
@@ -7,10 +7,13 @@ import {
   SectionWrapper,
   MainWrapper,
 } from '../styles';
+import Context from '../../Context';
 
 // This table allows us to see the general data presented on main page
 // And access the respective investor
-const EditTable = ({ data }) => {
+const EditTable = () => {
+  const { store } = useContext(Context);
+
   return (
     <MainWrapper>
       <SectionWrapper aria-label="investors">
@@ -28,14 +31,14 @@ const EditTable = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((investor, index) => {
+            {store.map((investor, index) => {
               return (
                 <tr key={index}>
-                  <td>{investor[0]}</td>
+                  <td>{investor.name}</td>
                   <td>
                     <EditButton>
                       <Link
-                        to={`/edit/${investor[0]}`}
+                        to={`/edit/${investor.name}`}
                         aria-label="Edit investor"
                       >
                         Edit

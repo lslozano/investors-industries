@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   MainWrapper,
@@ -11,16 +11,18 @@ import {
   InputsWrapper,
   PortalContent,
 } from '../styles';
-import { investorFilter } from '../../utils/investorFilter';
+import { investorFilter } from '../../utils';
 import { Portal } from '@reach/portal';
+import Context from '../../Context';
 
-const EditInvestor = ({ data, onEditName, onDeleteStartup }) => {
+const EditInvestor = ({ onDeleteStartup }) => {
+  const { store, editInvestorName } = useContext(Context);
   const { investorName } = useParams();
   const [investorNewName, setInvestorNewName] = useState(investorName);
   const [editOpen, setEditOpen] = useState(false);
-  const filteredInvestor = investorFilter(data, investorName);
+  const filteredInvestor = investorFilter(store, investorName);
 
-  const [name, interest, startups] = filteredInvestor[0];
+  const {name, interest, startups} = filteredInvestor[0];
 
   const handleInputChange = (event) => {
     const { value: newInvestorName } = event.target;
@@ -30,7 +32,7 @@ const EditInvestor = ({ data, onEditName, onDeleteStartup }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    onEditName(investorName, investorNewName);
+    editInvestorName(investorName, investorNewName);
   };
 
   const handleDelete = (startupIndex) => {
@@ -83,7 +85,12 @@ const EditInvestor = ({ data, onEditName, onDeleteStartup }) => {
       {editOpen && (
         <Portal>
           <PortalContent>
-            <div onClick={() => setEditOpen(false)} style={{ paddingLeft: '20px' }}>Close</div>
+            <div
+              onClick={() => setEditOpen(false)}
+              style={{ paddingLeft: '20px' }}
+            >
+              Close
+            </div>
             <FormWrapper onSubmit={handleSubmit}>
               <legend id="investor-name">Change investor name</legend>
               <InputsWrapper>
