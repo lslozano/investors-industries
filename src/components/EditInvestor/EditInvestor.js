@@ -14,15 +14,19 @@ import {
 import { investorFilter } from '../../utils';
 import { Portal } from '@reach/portal';
 import Context from '../../Context';
+import { useNavigate } from 'react-router-dom';
 
-const EditInvestor = ({ onDeleteStartup }) => {
-  const { store, editInvestorName } = useContext(Context);
+const EditInvestor = () => {
+  const { store, helpers } = useContext(Context);
+  const { setSessionStorageData, editInvestorName, deleteStartupFromInvestor } =
+    helpers;
   const { investorName } = useParams();
   const [investorNewName, setInvestorNewName] = useState(investorName);
   const [editOpen, setEditOpen] = useState(false);
-  const filteredInvestor = investorFilter(store, investorName);
+  const navigate = useNavigate();
 
-  const {name, interest, startups} = filteredInvestor[0];
+  const filteredInvestor = investorFilter(store, investorName);
+  const { name, interest, startups } = filteredInvestor[0];
 
   const handleInputChange = (event) => {
     const { value: newInvestorName } = event.target;
@@ -32,11 +36,22 @@ const EditInvestor = ({ onDeleteStartup }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    editInvestorName(investorName, investorNewName);
+    editInvestorName(
+      investorName,
+      investorNewName,
+      store,
+      setSessionStorageData,
+      navigate
+    );
   };
 
   const handleDelete = (startupIndex) => {
-    onDeleteStartup(investorName, startupIndex);
+    deleteStartupFromInvestor(
+      investorName,
+      startupIndex,
+      store,
+      setSessionStorageData
+    );
   };
 
   return (

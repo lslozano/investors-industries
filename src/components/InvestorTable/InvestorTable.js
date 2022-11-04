@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   MainWrapper,
   TableWrapper,
@@ -9,13 +9,15 @@ import {
 } from '../styles';
 import { useParams, Link } from 'react-router-dom';
 import { investorFilter } from '../../utils';
+import Context from '../../Context';
 
 // This table allows us to see the Investor, their interest and all the industries matched to it
-const InvestorTable = ({ data }) => {
+const InvestorTable = () => {
+  const { store } = useContext(Context);
   const { investorName } = useParams();
-  const filteredInvestor = investorFilter(data, investorName);
 
-  const [name, interest, startups] = filteredInvestor[0];
+  const filteredInvestor = investorFilter(store, investorName);
+  const { name, interest, startups } = filteredInvestor[0];
 
   return (
     <MainWrapper>
@@ -27,7 +29,7 @@ const InvestorTable = ({ data }) => {
             </Link>
           </PrimaryButton>
           <EditButton>
-            <Link to={`/edit/${investorName}`} aria-label="Edit investor">
+            <Link to={`/edit/${name}`} aria-label="Edit investor">
               Edit investor
             </Link>
           </EditButton>

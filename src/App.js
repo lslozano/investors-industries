@@ -14,6 +14,11 @@ import {
 } from './utils';
 import { Provider } from './Context';
 
+const fileHandler = new FilesChangeHandler();
+const investorActions = new InvestorActions()
+const { addInvestorsCSV, addStartupsCSV } = fileHandler;
+const { editInvestorName, deleteStartupFromInvestor } = investorActions;
+
 function App() {
   const [investors, setInvestors] = useState();
   const [startups, setStartups] = useState();
@@ -25,10 +30,7 @@ function App() {
     'investors',
     null
   );
-  const fileHandler = new FilesChangeHandler();
-  const investorActions = new InvestorActions();
-  const { addInvestorsCSV, addStartupsCSV } = fileHandler;
-  const { editInvestorName } = investorActions;
+;
 
   useEffect(() => {
     if (investors && startups) {
@@ -36,35 +38,6 @@ function App() {
       setLocalStorageData(mergeInvestorsStartups(investors, startups));
     }
   }, [investors, startups, setLocalStorageData]);
-
-  // Method to delete startups of investor
-  const deleteInvestorStartup = (investorName, startupIndex) => {
-    let storageCopy;
-    if (sessionStorageData === null) {
-      storageCopy = [...localStorageData];
-    } else {
-      storageCopy = [...sessionStorageData];
-    }
-
-    const investorIndex = storageCopy.findIndex(
-      (investor) => investor[0] === investorName
-    );
-
-    const deletedStartup = storageCopy[investorIndex][2][startupIndex];
-    storageCopy[investorIndex][2].splice(startupIndex, 1);
-    setSessionStorageData(storageCopy);
-
-    const investor = sessionStorage.getItem(investorName);
-
-    if (investor === null) {
-      const deletedStartups = [deletedStartup];
-      sessionStorage.setItem(investorName, JSON.stringify(deletedStartups));
-    } else {
-      const pastDeletedStartups = JSON.parse(investor);
-      const deletedStartups = [...pastDeletedStartups, deletedStartup];
-      sessionStorage.setItem(investorName, JSON.stringify(deletedStartups));
-    }
-  };
 
   return (
     <Provider
@@ -75,30 +48,18 @@ function App() {
           addStartupsCSV,
           setInvestors,
           setStartups,
+          setSessionStorageData,
           editInvestorName,
+          deleteStartupFromInvestor,
         },
       }}
     >
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/edit" element={<EditTable />} />
-        <Route
-          path="/edit/:investorName"
-          element={<EditInvestor onDeleteStartup={deleteInvestorStartup} />}
-        />
-        <Route
-          path="/:investorName"
-          element={
-            <InvestorTable
-              data={
-                sessionStorageData === null
-                  ? localStorageData
-                  : sessionStorageData
-              }
-            />
-          }
-        />
-      </Routes>
+        <Route path="/edit/:investorName" element={<EditInvestor />} />
+        <Route path="/:investorName" element={<InvestorTable />} />
+       </Routes>
     </Provider>
   );
 }

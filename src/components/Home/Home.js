@@ -14,7 +14,7 @@ import Context from '../../Context';
 const Home = () => {
   const { store, helpers } = useContext(Context);
   const { addInvestorsCSV, addStartupsCSV, setInvestors, setStartups } =
-    helpers || {};
+    helpers;
 
   return (
     <MainWrapper>
