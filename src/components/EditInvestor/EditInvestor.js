@@ -5,21 +5,25 @@ import {
   SectionWrapper,
   PrimaryButton,
   EditButton,
-  TableWrapper,
-  DeleteButton,
   FormWrapper,
   InputsWrapper,
   PortalContent,
+  ButtonsContainer,
 } from '../styles';
 import { investorFilter } from '../../utils';
 import { Portal } from '@reach/portal';
 import Context from '../../Context';
 import { useNavigate } from 'react-router-dom';
+import { StartupsTable } from '../StartupsTable';
 
 const EditInvestor = () => {
   const { store, helpers } = useContext(Context);
-  const { setSessionStorageData, editInvestorName, deleteStartupFromInvestor } =
-    helpers;
+  const {
+    setSessionStorageData,
+    editInvestorName,
+    deleteStartupFromInvestor,
+    addStartup,
+  } = helpers;
   const { investorName } = useParams();
   const [investorNewName, setInvestorNewName] = useState(investorName);
   const [editOpen, setEditOpen] = useState(false);
@@ -65,37 +69,12 @@ const EditInvestor = () => {
         <section>
           <h1>Investor: {name} </h1>
           <p>Interest: {interest}</p>
-          <EditButton onClick={() => setEditOpen(true)}>Edit Name</EditButton>
+          <ButtonsContainer>
+            <EditButton onClick={() => setEditOpen(true)}>Edit Name</EditButton>
+            <PrimaryButton onClick={() => addStartup(name, store, setSessionStorageData)}>Add Startup</PrimaryButton>
+          </ButtonsContainer>
         </section>
-        <section>
-          {startups.length > 0 ? (
-            <TableWrapper>
-              <caption>Startups</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Edit</th>
-                </tr>
-              </thead>
-              <tbody>
-                {startups.map((startup, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{startup[0]}</td>
-                      <td>
-                        <DeleteButton onClick={() => handleDelete(index)}>
-                          Delete
-                        </DeleteButton>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </TableWrapper>
-          ) : (
-            <p>No startups matched.</p>
-          )}
-        </section>
+        <StartupsTable startups={startups} handleDelete={handleDelete} />
       </SectionWrapper>
       {editOpen && (
         <Portal>

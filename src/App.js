@@ -17,7 +17,7 @@ import { Provider } from './Context';
 const fileHandler = new FilesChangeHandler();
 const investorActions = new InvestorActions()
 const { addInvestorsCSV, addStartupsCSV } = fileHandler;
-const { editInvestorName, deleteStartupFromInvestor } = investorActions;
+const { editInvestorName, deleteStartupFromInvestor, addStartup } = investorActions;
 
 function App() {
   const [investors, setInvestors] = useState();
@@ -51,6 +51,7 @@ function App() {
           setSessionStorageData,
           editInvestorName,
           deleteStartupFromInvestor,
+          addStartup
         },
       }}
     >
